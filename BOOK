@@ -1,0 +1,20 @@
+Xpackage com.bookcatalog;
+
+public class Book {
+    private String titulo;
+    private Author autor;
+    private String idioma;
+    private int descargas;
+
+    public Book(String titulo, Author autor, String idioma, int descargas) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.idioma = idioma;
+        this.descargas = descargas;
+    }
+
+    public String getTitulo() { return titulo; }
+    public Author getAutor() { return autor; }
+    public String getIdioma() { return idioma; }
+    public int getDescargas() { return descargas; }
+}
