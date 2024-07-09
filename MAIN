@@ -1,0 +1,154 @@
+package com.bookcatalog;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        List<Book> books = inicializarLibros();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            mostrarMenu();
+
+            int opcion = obtenerOpcion(scanner);
+
+            switch (opcion) {
+                case 1:
+                    buscarLibroPorTitulo(scanner, books);
+                    break;
+                case 2:
+                    listarAutoresVivosEnAño(scanner, books);
+                    break;
+                case 3:
+                    listarLibrosPorIdioma(scanner, books);
+                    break;
+                case 4:
+                    mostrarTodosLosLibros(books);
+                    break;
+                case 5:
+                    despedirse();
+                    System.exit(0);
+                default:
+                    System.out.println("Opción no válida. Por favor, seleccione una opción del 1 al 5.");
+            }
+            System.out.println();
+        }
+    }
+
+    private static void mostrarMenu() {
+        System.out.println("=== Catálogo de Libros ===");
+        System.out.println("Seleccione una opción:");
+        System.out.println("1. Buscar libro por título");
+        System.out.println("2. Listar autores vivos en un año determinado");
+        System.out.println("3. Listar libros por idioma");
+        System.out.println("4. Mostrar todos los libros en el catálogo");
+        System.out.println("5. Salir");
+        System.out.print("Opción: ");
+    }
+
+    private static int obtenerOpcion(Scanner scanner) {
+        while (!scanner.hasNextInt()) {
+            System.out.println("Entrada no válida. Por favor, ingrese un número del 1 al 5.");
+            scanner.next(); // limpiar la entrada no válida
+            System.out.print("Opción: ");
+        }
+        return scanner.nextInt();
+    }
+
+    private static void buscarLibroPorTitulo(Scanner scanner, List<Book> books) {
+        System.out.print("Ingrese el título del libro: ");
+        String titulo = scanner.next();
+        boolean libroEncontrado = false;
+
+        for (Book libro : books) {
+            if (libro.getTitulo().equalsIgnoreCase(titulo)) {
+                System.out.println("Libro encontrado: " + libro.getTitulo() +
+                        ", Autor: " + libro.getAutor().getApellido() + ", " + libro.getAutor().getNombre() +
+                        ", Idioma: " + libro.getIdioma() +
+                        ", Descargas: " + libro.getDescargas());
+                libroEncontrado = true;
+                break;
+            }
+        }
+
+        if (!libroEncontrado) {
+            System.out.println("El libro no fue encontrado.");
+        }
+    }
+
+    private static void listarAutoresVivosEnAño(Scanner scanner, List<Book> books) {
+        System.out.print("Ingrese el año: ");
+        while (!scanner.hasNextInt()) {
+            System.out.println("Entrada no válida. Por favor, ingrese un año en formato numérico.");
+            scanner.next(); // limpiar la entrada no válida
+            System.out.print("Ingrese el año: ");
+        }
+        int año = scanner.nextInt();
+        for (Book libro : books) {
+            Author autor = libro.getAutor();
+            if (autor.estaVivoEnAño(año)) {
+                System.out.println(autor.getApellido() + ", " + autor.getNombre());
+            }
+        }
+    }
+
+    private static void listarLibrosPorIdioma(Scanner scanner, List<Book> books) {
+        System.out.print("Ingrese el idioma (por ejemplo, EN para inglés): ");
+        String idioma = scanner.next();
+        for (Book libro : books) {
+            if (libro.getIdioma().equalsIgnoreCase(idioma)) {
+                System.out.println(libro.getTitulo());
+            }
+        }
+    }
+
+    private static void mostrarTodosLosLibros(List<Book> books) {
+        if (books.isEmpty()) {
+            System.out.println("El catálogo está vacío.");
+        } else {
+            System.out.println("=== Libros en el Catálogo ===");
+            for (Book libro : books) {
+                System.out.println("Título: " + libro.getTitulo() +
+                        ", Autor: " + libro.getAutor().getApellido() + ", " + libro.getAutor().getNombre() +
+                        ", Idioma: " + libro.getIdioma() +
+                        ", Descargas: " + libro.getDescargas());
+            }
+        }
+    }
+
+    private static void despedirse() {
+        System.out.println("Gracias por usar el catálogo de libros. ¡Hasta luego!");
+    }
+
+    private static List<Book> inicializarLibros() {
+        List<Book> books = new ArrayList<>();
+        Author autor1 = new Author("Cervantes", "Miguel de", 1547, 1616);
+        Book libro1 = new Book("El Quijote", autor1, "ES", 6493);
+
+        Author autor2 = new Author("Shakespeare", "William", 1564, 1616);
+        Book libro2 = new Book("Hamlet", autor2, "EN", 6493);
+
+        Author autor3 = new Author("Rowling", "J.K.", 1965, null);
+        Book libro3 = new Book("Harry Potter and the Sorcerer's Stone", autor3, "EN", 1000000);
+
+        Author autor4 = new Author("Saint-Exupéry", "Antoine de", 1900, 1944);
+        Book libro4 = new Book("El Principito", autor4, "FR", 800000);
+
+        Author autor5 = new Author("Pacheco", "José Emilio", 1939, 2014);
+        Book libro5 = new Book("Las batallas en el desierto", autor5, "ES", 750000);
+
+        Author autor6 = new Author("Asimov", "Isaac", 1920, 1992);
+        Book libro6 = new Book("I, Robot", autor6, "EN", 900000);
+
+        books.add(libro1);
+        books.add(libro2);
+        books.add(libro3);
+        books.add(libro4);
+        books.add(libro5);
+        books.add(libro6);
+
+        return books;
+    }
+}
