@@ -1,0 +1,24 @@
+package com.bookcatalog;
+
+public class Author {
+    private String apellido;
+    private String nombre;
+    private int añoNacimiento;
+    private Integer añoMuerte; // Puede ser nulo si el autor está vivo
+
+    public Author(String apellido, String nombre, int añoNacimiento, Integer añoMuerte) {
+        this.apellido = apellido;
+        this.nombre = nombre;
+        this.añoNacimiento = añoNacimiento;
+        this.añoMuerte = añoMuerte;
+    }
+
+    public String getApellido() { return apellido; }
+    public String getNombre() { return nombre; }
+    public int getAñoNacimiento() { return añoNacimiento; }
+    public Integer getAñoMuerte() { return añoMuerte; }
+
+    public boolean estaVivoEnAño(int año) {
+        return año >= añoNacimiento && (añoMuerte == null || año <= añoMuerte);
+    }
+}
