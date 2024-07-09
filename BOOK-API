@@ -1,0 +1,17 @@
+package com.bookcatalog;
+
+public class BookAPI {
+
+    @org.jetbrains.annotations.Nullable
+    public static Book buscarLibroPorTitulo(String titulo) {
+
+        if ("Don Quijote de la mancha".equalsIgnoreCase(titulo)) {
+            Author autor = new Author("Cervantes", "Miguel de", 1547, 1616);
+            return new Book("Don Quijote de la mancha", autor, "ES", 6493);
+        } else if ("Hamlet".equalsIgnoreCase(titulo)) {
+            Author autor = new Author("Shakespeare", "William", 1564, 1616);
+            return new Book("Hamlet", autor, "EN", 6493);
+        }
+        return null;
+    }
+}
